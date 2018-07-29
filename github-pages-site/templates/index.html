@@ -18,6 +18,9 @@
         var Input = React.createClass({
             updateLabel: function(event){
                 this.setState({value: event.target.value});
+                fetch(`http://jsonplaceholder.typicode.com/posts`)
+                .then(result=>result.json())
+                .then(items=>this.setState({value: items}))
             },
             getInitialState: function(){
                 return {
