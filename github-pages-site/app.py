@@ -13,7 +13,7 @@ app.config.from_pyfile('settings.py')
 def index():
     return render_template('index.html')
 
-@app.route("/website/char_search")
+@app.route("/char_search")
 def char_search():
     search_term = request.args.get('query')
     results = query_marvel(search_term, "characters", "nameStartsWith", "name")
