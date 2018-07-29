@@ -6,11 +6,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
     <title>React App</title>
   </head>
 <body>
-    <div id="mount-point"></div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">Marvel API Search</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+            <div class="container">
+                    <h1>Hello!</h1>
+                    <p>Below you'll find a search box which you can use to query the Marvel API. You will be querying Character and Series names simultaneously with their respective "starts with" parameters. Try something like: "Spider"!</p>
+            </div>
+    </div>
+    <div class="container">
+        <div class="starter-template input-group input-group-lg">
+            <div id="mount-point"></div>
+        </div>
+    </div>
 </body>
 
     <script type="text/jsx">
@@ -22,11 +43,17 @@
 
                 fetch(`/char_search?query=` + event.target.value)
                 .then(result=>result.json())
-                .then(items=>this.setState({chars: items}))
+                .then(items=>this.setState({chars: items.map((item) =>
+                    <li>{item}</li>
+                    )
+                }))
 
                 fetch(`/series_search?query=` + event.target.value)
                 .then(result=>result.json())
-                .then(items=>this.setState({series: items}))
+                .then(items=>this.setState({series: items.map((item) =>
+                    <li>{item}</li>
+                    )
+                }))
 
             },
             getInitialState: function(){
@@ -40,9 +67,9 @@
             render: function(){
                 return (
                     <div className="update-label">
-                        <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
-                        <Label value={this.state.chars}/>
-                        <SeriesLabel value={this.state.series}/>
+                        <input type="text" placeholder="Enter your search!" class="form-control col-12" onChange={this.updateLabel}/>
+                        <Label class="col-6" value={this.state.chars}/>
+                        <SeriesLabel class="col-6" value={this.state.series}/>
                     </div>
             )
         }
