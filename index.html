@@ -9,55 +9,48 @@
 
     <title>React App</title>
   </head>
-  <body>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+<body>
+    <div id="mount-point"></div>
+</body>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script type="text/jsx">
+        /*** @jsx React.DOM */
+        var Input = React.createClass({
+            updateLabel: function(event){
+                this.setState({value: event.target.value});
+                fetch(`http://jsonplaceholder.typicode.com/posts`)
+                .then(result=>result.json())
+                .then(items=>this.setState({value: items}))
+            },
+            getInitialState: function(){
+                return {
+                    value: ''
+                }
+            },
+            componentWillMount: function(){
+                this.setState({value: this.state.value})
+            },
+            render: function(){
+                return (
+                    <div className="update-label">
+                        <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
+                        <Label value={this.state.value}/>
+                    </div>
+            )
+        }
+    });
 
-      To begin the development, run `npm start`.
-      To create a production bundle, use `npm run build`.
-    -->
-
-  </body>
-
-<script type="text/jsx">
-    /*** @jsx React.DOM */
-    var Input = React.createClass({
-        updateLabel: function(event){
-            this.setState({value: event.target.value});
-        },
-        getInitialState: function(){
-            return {
-                value: ''
-            }
-        },
-        componentWillMount: function(){
-            this.setState({value: this.state.value})
-        },
+    var Label = React.createClass({
         render: function(){
             return (
-                <div className="update-label">
-                      <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
-                    <Label value={this.state.value}/>
-                </div>
-        )
-    }
-});
+            <div class="my-label">
+            <h2>{this.props.value}</h2>
+            </div>
+            )
+        }
+    });
 
-var Label = React.createClass({
-    render: function(){
-        return (
-        <div class="my-label">
-        <h2>{this.props.value}</h2>
-        </div>
-        )
-    }
-});
-
-React.render(<Input/>, document.getElementById('mount-point'));
-</script>
+    React.render(<Input/>, document.getElementById('mount-point'));
+    </script>
 
 </html>
