@@ -3,75 +3,51 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.2/JSXTransformer.js"></script>
-    <!--
-      Notice the use of %PUBLIC_URL% in the tag above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>React App</title>
   </head>
-  <body>
-    <div id="root">
+<body>
+    <div id="mount-point"></div>
+</body>
 
-    </div>
-    <div id="imageroot">
+    <script type="text/jsx">
+        /*** @jsx React.DOM */
+        var Input = React.createClass({
+            updateLabel: function(event){
+                this.setState({value: event.target.value});
+            },
+            getInitialState: function(){
+                return {
+                    value: ''
+                }
+            },
+            componentWillMount: function(){
+                this.setState({value: this.state.value})
+            },
+            render: function(){
+                return (
+                    <div className="update-label">
+                        <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
+                        <Label value={this.state.value}/>
+                    </div>
+            )
+        }
+    });
 
-    </div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start`.
-      To create a production bundle, use `npm run build`.
-    -->
-
-  </body>
-
-<script type="text/jsx">
-    /*** @jsx React.DOM */
-    var Input = React.createClass({
-        updateLabel: function(event){
-            this.setState({value: event.target.value});
-        },
-        getInitialState: function(){
-            return {
-                value: ''
-            }
-        },
-        componentWillMount: function(){
-            this.setState({value: this.state.value})
-        },
+    var Label = React.createClass({
         render: function(){
             return (
-                <div className="update-label">
-                      <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
-                    <Label value={this.state.value}/>
-                </div>
-        )
-    }
-});
+            <div class="my-label">
+            <h2>{this.props.value}</h2>
+            </div>
+            )
+        }
+    });
 
-var Label = React.createClass({
-    render: function(){
-        return (
-        <div class="my-label">
-        <h2>{this.props.value}</h2>
-        </div>
-        )
-    }
-});
-
-React.render(<Input/>, document.getElementById('mount-point'));
-</script>
+    React.render(<Input/>, document.getElementById('mount-point'));
+    </script>
 
 </html>
