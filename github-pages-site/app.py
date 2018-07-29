@@ -39,7 +39,7 @@ def query_marvel(query, api, search_param, c_id):
     chars = json.loads(result.content)
     char_names = [c[c_id] for c in chars['data']['results']]
     if len(char_names) == 0:
-        return json.dumps(["No results found sorry :("])
+        char_names = ["No results found sorry :("]
     return json.dumps(char_names)
 
 def get_token():
