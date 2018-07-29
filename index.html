@@ -17,10 +17,17 @@
         /*** @jsx React.DOM */
         var Input = React.createClass({
             updateLabel: function(event){
-                this.setState({value: event.target.value});
-                fetch(`https://jsonplaceholder.typicode.com/posts`)
+                this.setState({chars: "Asking Marvel real quick, one sec..."});
+                this.setState({series: "Asking Marvel real quick, one sec..."});
+
+                fetch(`/char_search?query=` + event.target.value)
                 .then(result=>result.json())
-                .then(items=>this.setState({value: items}))
+                .then(items=>this.setState({chars: items}))
+
+                fetch(`/series_search?query=` + event.target.value)
+                .then(result=>result.json())
+                .then(items=>this.setState({series: items}))
+
             },
             getInitialState: function(){
                 return {
@@ -34,17 +41,32 @@
                 return (
                     <div className="update-label">
                         <input type="text" placeholder="Enter text" onChange={this.updateLabel}/>
-                        <Label value={this.state.value}/>
+                        <Label value={this.state.chars}/>
+                        <SeriesLabel value={this.state.series}/>
                     </div>
             )
         }
     });
 
+
+
     var Label = React.createClass({
         render: function(){
             return (
             <div class="my-label">
-            <h2>{this.props.value}</h2>
+                <h2>Characters</h2>
+            <h3>{this.props.value}</h3>
+            </div>
+            )
+        }
+    });
+
+    var SeriesLabel = React.createClass({
+        render: function(){
+            return (
+            <div class="my-label">
+                <h2>Series</h2>
+            <h3>{this.props.value}</h3>
             </div>
             )
         }
