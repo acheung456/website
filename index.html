@@ -41,7 +41,7 @@
                 this.setState({chars: "Asking Marvel real quick, one sec..."});
                 this.setState({series: "Asking Marvel real quick, one sec..."});
 
-                fetch(`/website/char_search?query=` + event.target.value)
+                fetch(`/char_search?query=` + event.target.value)
                 .then(result=>result.json())
                 .then(items=>this.setState({chars: items.map((item) =>
                     <li>{item}</li>
